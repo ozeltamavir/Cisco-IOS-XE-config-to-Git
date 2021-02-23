@@ -1,8 +1,9 @@
+
 Building configuration...
 
-Current configuration : 6541 bytes
+Current configuration : 6736 bytes
 !
-! Last configuration change at 05:40:54 UTC Mon Feb 22 2021
+! Last configuration change at 04:49:35 UTC Tue Feb 23 2021 by developer
 !
 version 17.3
 service timestamps debug datetime msec
@@ -133,7 +134,7 @@ crypto pki certificate chain SLA-TrustPoint
   D697DF7F 28
   	quit
 !
-license udi pid CSR1000V sn 9DUYVJCVZLM
+license udi pid CSR1000V sn 9V5DDXK52F8
 license boot level ax
 diagnostic bootup level minimal
 memory free low-watermark processor 71556
@@ -168,6 +169,10 @@ redundancy
 ! 
 ! 
 !
+!
+interface Loopback24
+ description Pod Number 24
+ ip address 10.111.24.1 255.255.255.255
 !
 interface GigabitEthernet1
  description MANAGEMENT INTERFACE - DON'T TOUCH ME
@@ -237,6 +242,10 @@ call-home
  profile "CiscoTAC-1"
   active
   destination transport-method http
+ntp server 10.11.24.65
+ntp server 10.12.24.65
+ntp server 10.13.24.65
+ntp server 10.14.24.65
 !
 !
 !
