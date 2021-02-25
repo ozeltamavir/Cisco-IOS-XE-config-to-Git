@@ -1,9 +1,8 @@
-
 Building configuration...
 
-Current configuration : 6736 bytes
+Current configuration : 7153 bytes
 !
-! Last configuration change at 04:49:35 UTC Tue Feb 23 2021 by developer
+! Last configuration change at 08:25:28 UTC Thu Feb 25 2021 by developer
 !
 version 17.3
 service timestamps debug datetime msec
@@ -18,6 +17,22 @@ hostname csr1000v-1
 boot-start-marker
 boot-end-marker
 !
+!
+vrf definition blue
+ description Blue VRF
+ rd 1:410
+!
+vrf definition green
+ description Green VRF
+ rd 1:420
+!
+vrf definition ozairspod
+ description ozairspod VRF
+ rd 1:248
+!
+vrf definition red
+ description Red VRF
+ rd 1:400
 !
 enable secret 9 $9$GNcSrWbM1PyCqU$9.BCza34ClqbgyABGzRV1v5hjCWhaoN9K.gqxCtcCvE
 !
@@ -134,7 +149,7 @@ crypto pki certificate chain SLA-TrustPoint
   D697DF7F 28
   	quit
 !
-license udi pid CSR1000V sn 9V5DDXK52F8
+license udi pid CSR1000V sn 9KIOHQKVRYF
 license boot level ax
 diagnostic bootup level minimal
 memory free low-watermark processor 71556
@@ -170,9 +185,25 @@ redundancy
 ! 
 !
 !
-interface Loopback24
- description Pod Number 24
- ip address 10.111.24.1 255.255.255.255
+interface Loopback11248
+ description Pod Number 11248
+ vrf forwarding red
+ no ip address
+!
+interface Loopback12248
+ description Pod Number 12248
+ vrf forwarding blue
+ no ip address
+!
+interface Loopback13248
+ description Pod Number 13248
+ vrf forwarding green
+ no ip address
+!
+interface Loopback14248
+ description Pod Number 14248
+ vrf forwarding ozairspod
+ no ip address
 !
 interface GigabitEthernet1
  description MANAGEMENT INTERFACE - DON'T TOUCH ME
@@ -242,10 +273,6 @@ call-home
  profile "CiscoTAC-1"
   active
   destination transport-method http
-ntp server 10.11.24.65
-ntp server 10.12.24.65
-ntp server 10.13.24.65
-ntp server 10.14.24.65
 !
 !
 !
